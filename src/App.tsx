@@ -21,8 +21,30 @@ export function App() {
   const [isSlideshowOpen, setIsSlideshowOpen] = useState(false);
   const [isAdminOpen, setIsAdminOpen] = useState(false);
 
-  // Simulation pour tester les deux modes (Avant le 4 oct vs Jour J)
+  // Simulation pour tester les deux modes (Avant le 4 oct vs Jour J - réservé à l'organisateur)
   const [isSimulatedDayJ, setIsSimulatedDayJ] = useState(false);
+
+  // Authentification administrateur
+  const [isAdminAuthenticated, setIsAdminAuthenticated] = useState<boolean>(() => {
+    try {
+      return sessionStorage.getItem('birthday_admin_auth') === 'true';
+    } catch {
+      return false;
+    }
+  });
+
+  const handleSetIsAdminAuthenticated = (val: boolean) => {
+    setIsAdminAuthenticated(val);
+    try {
+      if (val) {
+        sessionStorage.setItem('birthday_admin_auth', 'true');
+      } else {
+        sessionStorage.removeItem('birthday_admin_auth');
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   // État du compte à rebours
   const [countdown, setCountdown] = useState<CountdownTime>({
@@ -120,6 +142,7 @@ export function App() {
         <Header
           countdown={countdown}
           isSimulatedDayJ={isSimulatedDayJ}
+          isAdminAuthenticated={isAdminAuthenticated}
           onToggleSimulatedDayJ={() => setIsSimulatedDayJ(!isSimulatedDayJ)}
           onOpenGuestForm={() => setIsGuestFormOpen(true)}
           onOpenSlideshow={() => setIsSlideshowOpen(true)}
@@ -158,6 +181,10 @@ export function App() {
         isOpen={isAdminOpen}
         onClose={() => setIsAdminOpen(false)}
         messages={messages}
+        isAuthenticated={isAdminAuthenticated}
+        onSetIsAuthenticated={handleSetIsAdminAuthenticated}
+        isSimulatedDayJ={isSimulatedDayJ}
+        onToggleSimulatedDayJ={() => setIsSimulatedDayJ(!isSimulatedDayJ)}
       />
     </div>
   );

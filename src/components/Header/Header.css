@@ -139,6 +139,7 @@
 }
 
 .admin-icon-btn {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -157,6 +158,23 @@
   color: #0f172a;
   background: #ffffff;
   transform: scale(1.05);
+}
+
+.admin-icon-btn.logged-in {
+  background: #fef3c7;
+  color: #d97706;
+  border-color: #fcd34d;
+}
+
+.admin-status-dot {
+  position: absolute;
+  top: 1px;
+  right: 1px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #10b981;
+  border: 1.5px solid #ffffff;
 }
 
 /* Carte Hero principale */

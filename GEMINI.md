@@ -1,7 +1,7 @@
 # Projet Carte d'Anniversaire Interactive 🎂 — Spécifications & Architecture
 
 ## 1. Vision & Concept
-Une web application interactive conçue comme une carte d'anniversaire collective pour papa.
+Une web application interactive conçue comme une carte d'anniversaire collective pour Olivier.
 Les proches munis du lien peuvent déposer un message personnalisé accompagné d'une photo ou d'une vidéo souvenir.
 
 L'esthétique combine un **tableau de liège chaleureux** (avec des post-its colorés et des polaroids épinglés avec punaises 3D et washi tape) sur un **arrière-plan de route de campagne bucolique animée** (style dessin animé doux avec légers nuages qui défilent).

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Lock, KeyRound, Trash2, Eye, EyeOff, Download } from 'lucide-react';
+import { X, Lock, KeyRound, Trash2, Eye, EyeOff, Download, LogOut } from 'lucide-react';
 import { deleteMessage, toggleHideMessage } from '../../services/firebase';
 import type { BirthdayMessage } from '../../types';
 import './AdminModal.css';
@@ -8,13 +8,26 @@ interface AdminModalProps {
   isOpen: boolean;
   onClose: () => void;
   messages: BirthdayMessage[];
+  isAuthenticated: boolean;
+  onSetIsAuthenticated: (val: boolean) => void;
+  isSimulatedDayJ: boolean;
+  onToggleSimulatedDayJ: () => void;
 }
 
-export const AdminModal: React.FC<AdminModalProps> = ({ isOpen, onClose, messages }) => {
+export const AdminModal: React.FC<AdminModalProps> = ({
+  isOpen,
+  onClose,
+  messages,
+  isAuthenticated,
+  onSetIsAuthenticated,
+  isSimulatedDayJ,
+  onToggleSimulatedDayJ,
+}) => {
   const [pin, setPin] = useState('');
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [pinError, setPinError] = useState(false);
   const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [hidingId, setHidingId] = useState<string | null>(null);
+  const [actionError, setActionError] = useState<string | null>(null);
 
   if (!isOpen) return null;
 
@@ -23,20 +36,35 @@ export const AdminModal: React.FC<AdminModalProps> = ({ isOpen, onClose, message
   const handlePinSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (pin === expectedPin) {
-      setIsAuthenticated(true);
+      onSetIsAuthenticated(true);
       setPinError(false);
+      setPin('');
+      setActionError(null);
     } else {
       setPinError(true);
     }
   };
 
+  const handleLogout = () => {
+    onSetIsAuthenticated(false);
+    setPin('');
+    setActionError(null);
+  };
+
   const handleDelete = async (id: string) => {
     if (window.confirm('Voulez-vous vraiment supprimer définitivement ce message ?')) {
       try {
+        setActionError(null);
         setDeletingId(id);
         await deleteMessage(id);
-      } catch (err) {
-        console.error(err);
+      } catch (err: unknown) {
+        console.error('Erreur suppression message:', err);
+        const msg = err instanceof Error ? err.message : 'Erreur inconnue';
+        if (msg.toLowerCase().includes('permission')) {
+          setActionError('Action refusée par Firestore (Permissions insuffisantes) : Vérifiez que vos règles Firestore autorisent "allow update, delete: if true;".');
+        } else {
+          setActionError(`Erreur lors de la suppression : ${msg}`);
+        }
       } finally {
         setDeletingId(null);
       }
@@ -45,9 +73,19 @@ export const AdminModal: React.FC<AdminModalProps> = ({ isOpen, onClose, message
 
   const handleToggleHide = async (id: string, currentHidden: boolean | undefined) => {
     try {
+      setActionError(null);
+      setHidingId(id);
       await toggleHideMessage(id, !currentHidden);
-    } catch (err) {
-      console.error(err);
+    } catch (err: unknown) {
+      console.error('Erreur masquage message:', err);
+      const msg = err instanceof Error ? err.message : 'Erreur inconnue';
+      if (msg.toLowerCase().includes('permission')) {
+        setActionError('Action refusée par Firestore (Permissions insuffisantes) : Vérifiez que vos règles Firestore autorisent "allow update, delete: if true;".');
+      } else {
+        setActionError(`Erreur lors du masquage : ${msg}`);
+      }
+    } finally {
+      setHidingId(null);
     }
   };
 
@@ -72,9 +110,22 @@ export const AdminModal: React.FC<AdminModalProps> = ({ isOpen, onClose, message
               <p className="admin-sub">Gestion des souvenirs et modération</p>
             </div>
           </div>
-          <button type="button" className="close-btn" onClick={onClose} aria-label="Fermer">
-            <X size={20} />
-          </button>
+          <div className="admin-header-actions">
+            {isAuthenticated && (
+              <button
+                type="button"
+                className="admin-logout-btn"
+                onClick={handleLogout}
+                title="Se déconnecter de l'administration"
+              >
+                <LogOut size={14} />
+                <span>Déconnexion</span>
+              </button>
+            )}
+            <button type="button" className="close-btn" onClick={onClose} aria-label="Fermer">
+              <X size={20} />
+            </button>
+          </div>
         </div>
 
         {!isAuthenticated ? (
@@ -99,7 +150,7 @@ export const AdminModal: React.FC<AdminModalProps> = ({ isOpen, onClose, message
               autoFocus
             />
             {pinError && (
-              <span className="pin-error-text">Code PIN incorrect (par défaut : 1234)</span>
+              <span className="pin-error-text">Code PIN incorrect</span>
             )}
             <button type="submit" className="pin-submit-btn">
               Déverrouiller
@@ -108,6 +159,48 @@ export const AdminModal: React.FC<AdminModalProps> = ({ isOpen, onClose, message
         ) : (
           /* Vue authentifiée : Tableau de gestion */
           <div className="admin-content">
+            {/* Outil de simulation de date réservé à l'organisateur */}
+            <div className="admin-sim-section">
+              <div className="admin-sim-info">
+                <span className="admin-sim-title">Simulation de date (Prévisualisation) :</span>
+                <span className="admin-sim-desc">
+                  Testez en direct ce que verront vos proches avant et pendant le Jour J.
+                </span>
+              </div>
+              <div className="admin-sim-btns">
+                <button
+                  type="button"
+                  className={`admin-mode-pill ${!isSimulatedDayJ ? 'active' : ''}`}
+                  onClick={() => isSimulatedDayJ && onToggleSimulatedDayJ()}
+                  title="Activer la vue Collecte (avant le 4 oct)"
+                >
+                  🔒 Collecte (Avant 4 oct)
+                </button>
+                <button
+                  type="button"
+                  className={`admin-mode-pill ${isSimulatedDayJ ? 'active' : ''}`}
+                  onClick={() => !isSimulatedDayJ && onToggleSimulatedDayJ()}
+                  title="Activer la vue Célébration (Jour J)"
+                >
+                  🎉 Révélation (Jour J)
+                </button>
+              </div>
+            </div>
+
+            {actionError && (
+              <div className="admin-action-error">
+                <span>{actionError}</span>
+                <button
+                  type="button"
+                  onClick={() => setActionError(null)}
+                  className="error-dismiss-btn"
+                  title="Fermer l'alerte"
+                >
+                  <X size={14} />
+                </button>
+              </div>
+            )}
+
             <div className="admin-actions-bar">
               <span className="admin-stats">
                 Total : <strong>{messages.length} messages</strong> (
@@ -144,7 +237,20 @@ export const AdminModal: React.FC<AdminModalProps> = ({ isOpen, onClose, message
                         <span className="msg-preview">{msg.content}</span>
                       </td>
                       <td className="media-cell">
-                        {msg.mediaUrl ? (
+                        {msg.mediaList && msg.mediaList.length > 0 ? (
+                          <a
+                            href={msg.mediaList[0].url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="media-link"
+                          >
+                            {msg.mediaList.length > 1
+                              ? `📎 ${msg.mediaList.length} médias`
+                              : msg.mediaList[0].type === 'video'
+                              ? '🎬 Vidéo'
+                              : '🖼️ Photo'}
+                          </a>
+                        ) : msg.mediaUrl ? (
                           <a
                             href={msg.mediaUrl}
                             target="_blank"
@@ -169,6 +275,7 @@ export const AdminModal: React.FC<AdminModalProps> = ({ isOpen, onClose, message
                           type="button"
                           className="action-icon-btn"
                           onClick={() => handleToggleHide(msg.id, msg.hidden)}
+                          disabled={hidingId === msg.id}
                           title={msg.hidden ? 'Rendre visible' : 'Masquer du tableau'}
                         >
                           {msg.hidden ? <Eye size={16} /> : <EyeOff size={16} />}

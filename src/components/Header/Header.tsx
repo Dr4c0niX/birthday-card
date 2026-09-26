@@ -6,6 +6,7 @@ import './Header.css';
 interface HeaderProps {
   countdown: CountdownTime;
   isSimulatedDayJ: boolean;
+  isAdminAuthenticated: boolean;
   onToggleSimulatedDayJ: () => void;
   onOpenGuestForm: () => void;
   onOpenSlideshow: () => void;
@@ -15,6 +16,7 @@ interface HeaderProps {
 export const Header: React.FC<HeaderProps> = ({
   countdown,
   isSimulatedDayJ,
+  isAdminAuthenticated,
   onToggleSimulatedDayJ,
   onOpenGuestForm,
   onOpenSlideshow,
@@ -24,19 +26,21 @@ export const Header: React.FC<HeaderProps> = ({
 
   return (
     <header className="app-header">
-      {/* Barre supérieure : switch de test et accès admin */}
+      {/* Barre supérieure : actions et accès admin */}
       <div className="header-top-bar">
         <div className="header-actions-right header-actions-standalone">
-          {/* Bouton simulation de date pour tester les deux modes */}
-          <button
-            type="button"
-            className={`sim-toggle-btn ${isBirthdayDay ? 'active' : ''}`}
-            onClick={onToggleSimulatedDayJ}
-            title="Basculez entre le mode collecte (avant le 4 oct) et le mode Jour J"
-          >
-            <Sparkles size={14} />
-            <span>Mode : <strong>{isBirthdayDay ? 'Jour J (Célébration)' : 'Avant le 4 oct (Collecte)'}</strong></span>
-          </button>
+          {/* Bouton simulation de date pour tester les deux modes (RESERVÉ À L'ADMINISTRATEUR) */}
+          {isAdminAuthenticated && (
+            <button
+              type="button"
+              className={`sim-toggle-btn ${isBirthdayDay ? 'active' : ''}`}
+              onClick={onToggleSimulatedDayJ}
+              title="[Mode Organisateur] Basculez entre le mode collecte et le mode Jour J"
+            >
+              <Sparkles size={14} />
+              <span>[Admin] Mode : <strong>{isBirthdayDay ? 'Jour J (Célébration)' : 'Collecte (Avant 4 oct)'}</strong></span>
+            </button>
+          )}
 
           {/* Bouton Diaporama TV */}
           <button
@@ -52,12 +56,13 @@ export const Header: React.FC<HeaderProps> = ({
           {/* Accès discret Admin */}
           <button
             type="button"
-            className="admin-icon-btn"
+            className={`admin-icon-btn ${isAdminAuthenticated ? 'logged-in' : ''}`}
             onClick={onOpenAdmin}
-            title="Panneau d'administration (Code PIN)"
+            title={isAdminAuthenticated ? "Administration (Connecté)" : "Panneau d'administration (Code PIN)"}
             aria-label="Accès administration"
           >
             <Lock size={15} />
+            {isAdminAuthenticated && <span className="admin-status-dot" />}
           </button>
         </div>
       </div>
@@ -67,15 +72,15 @@ export const Header: React.FC<HeaderProps> = ({
         <div className="hero-title-group">
           <span className="party-icon">🚴‍♂️</span>
           <h1 className="hero-title">
-            Joyeux 50ème Anniversaire Papa !
+            Joyeux 50ème Anniversaire Olivier !
           </h1>
           <span className="party-icon">🎂</span>
         </div>
 
         <p className="hero-subtitle">
           {isBirthdayDay
-            ? "Joyeux 50 ans Papa ! 🎉 Découvre tous les magnifiques souvenirs et petits mots d'amour préparés en secret par tes proches pour fêter ton demi-siècle !"
-            : "Chaque proche muni de ce lien peut déposer un petit mot, une photo ou une vidéo souvenir pour célébrer les 50 ans de Papa. Tout est gardé secret jusqu'au 4 octobre !"}
+            ? "Joyeux 50 ans Olivier ! 🎉 Découvre tous les magnifiques souvenirs et petits mots d'amour préparés en secret par tes proches pour fêter ton demi-siècle !"
+            : "Chaque proche muni de ce lien peut déposer un petit mot, une photo ou une vidéo souvenir pour célébrer les 50 ans d'Olivier. Tout est gardé secret jusqu'au 4 octobre !"}
         </p>
 
         {/* Section Compte à rebours OU Bandeau Célébration */}
@@ -110,7 +115,7 @@ export const Header: React.FC<HeaderProps> = ({
         ) : (
           <div className="birthday-banner">
             <Sparkles size={22} className="sparkle-anim" />
-            <span className="birthday-banner-text">🎂 Joyeux 50 ans Papa ! Tous les messages et souvenirs sont enfin révélés ! 🎉</span>
+            <span className="birthday-banner-text">🎂 Joyeux 50 ans Olivier ! Tous les messages et souvenirs sont enfin révélés ! 🎉</span>
             <Sparkles size={22} className="sparkle-anim" />
           </div>
         )}
@@ -128,7 +133,7 @@ export const Header: React.FC<HeaderProps> = ({
             </button>
           ) : (
             <div className="form-closed-badge">
-              <span>🎂 La boîte à souvenirs est fermée. Très bel anniversaire pour tes 50 ans Papa !</span>
+              <span>🎂 La boîte à souvenirs est fermée. Très bel anniversaire pour tes 50 ans Olivier !</span>
             </div>
           )}
         </div>

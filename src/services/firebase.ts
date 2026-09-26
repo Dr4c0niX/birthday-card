@@ -46,7 +46,7 @@ if (isFirebaseConfigured) {
     app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
     db = getFirestore(app);
     storage = getStorage(app);
-    console.log('✅ Firebase connecté avec succès à', firebaseConfig.projectId);
+    console.log('✅ Firebase connecté avec succès au projet :', firebaseConfig.projectId);
   } catch (error) {
     console.warn('⚠️ Erreur initialisation Firebase, passage en mode démo:', error);
   }
@@ -59,7 +59,7 @@ const INITIAL_DEMO_MESSAGES: BirthdayMessage[] = [
   {
     id: 'demo-1',
     author: 'Sophie & Marc',
-    content: 'Joyeux anniversaire Papa ! Merci pour tous ces merveilleux souvenirs, tes blagues inimitables et ta bonne humeur légendaire ! On t\'aime fort ❤️🎂',
+    content: 'Joyeux anniversaire Olivier ! Merci pour tous ces merveilleux souvenirs, tes blagues inimitables et ta bonne humeur légendaire ! On t\'aime fort ❤️🎂',
     style: 'polaroid',
     color: 'yellow',
     mediaList: [
@@ -87,7 +87,7 @@ const INITIAL_DEMO_MESSAGES: BirthdayMessage[] = [
   {
     id: 'demo-2',
     author: 'Lucas',
-    content: 'Un très bel anniversaire au meilleur papa et coach de vélo du monde ! Prêt pour notre prochaine balade dans les collines ? 🚴‍♂️✨',
+    content: 'Un très bel anniversaire à Olivier, le meilleur coach de vélo du monde ! Prêt pour notre prochaine balade dans les collines ? 🚴‍♂️✨',
     style: 'post-it',
     color: 'yellow',
     createdAt: Date.now() - 86400000,
@@ -108,7 +108,7 @@ const INITIAL_DEMO_MESSAGES: BirthdayMessage[] = [
   {
     id: 'demo-4',
     author: 'Camille',
-    content: 'Regarde ce qu\'on a retrouvé dans les cartons ! Une super photo souvenir de nos vacances ensemble. Gros bisous Papa ! ☀️🌴',
+    content: 'Regarde ce qu\'on a retrouvé dans les cartons ! Une super photo souvenir de nos vacances ensemble. Gros bisous Olivier ! ☀️🌴',
     style: 'polaroid',
     color: 'green',
     mediaList: [
@@ -308,16 +308,32 @@ export async function createMessage(params: {
     });
   }
 
+/**
+ * Nettoie un objet en retirant tous les champs 'undefined' pour Firestore
+ */
+function cleanFirestoreData<T extends Record<string, any>>(obj: T): Record<string, any> {
+  const result: Record<string, any> = {};
+  for (const [key, value] of Object.entries(obj)) {
+    if (value === undefined) continue;
+    if (Array.isArray(value)) {
+      result[key] = value.map((item) =>
+        item && typeof item === 'object' ? cleanFirestoreData(item) : item
+      );
+    } else if (value !== null && typeof value === 'object') {
+      result[key] = cleanFirestoreData(value);
+    } else {
+      result[key] = value;
+    }
+  }
+  return result;
+}
+
   const newMessage: Omit<BirthdayMessage, 'id'> = {
     author: params.author.trim(),
     content: params.content.trim(),
     style: params.style,
     color: params.color,
     mediaList,
-    // Rétrocompatibilité avec le premier média
-    mediaUrl: mediaList[0]?.url,
-    mediaType: mediaList[0]?.type,
-    mediaStoragePath: mediaList[0]?.storagePath,
     createdAt: Date.now(),
     rotation: getRandomRotation(),
     pinColor: getRandomPin(),
@@ -325,8 +341,18 @@ export async function createMessage(params: {
     hidden: false,
   };
 
+  // Rétrocompatibilité uniquement si un média est présent (évite les valeurs undefined rejetées par Firestore)
+  if (mediaList.length > 0) {
+    newMessage.mediaUrl = mediaList[0].url;
+    newMessage.mediaType = mediaList[0].type;
+    if (mediaList[0].storagePath) {
+      newMessage.mediaStoragePath = mediaList[0].storagePath;
+    }
+  }
+
   if (db && isFirebaseConfigured) {
-    await addDoc(collection(db, 'messages'), newMessage);
+    const dataToSave = cleanFirestoreData(newMessage);
+    await addDoc(collection(db, 'messages'), dataToSave);
     return;
   }
 

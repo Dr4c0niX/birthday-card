@@ -172,8 +172,9 @@ export const GuestFormModal: React.FC<GuestFormModalProps> = ({ isOpen, onClose,
       onSuccess();
       onClose();
     } catch (err: unknown) {
-      console.error(err);
-      setError('Une erreur est survenue lors de l\'enregistrement. Veuillez réessayer.');
+      console.error('Erreur ajout message:', err);
+      const msg = err instanceof Error ? err.message : 'Une erreur est survenue lors de l\'enregistrement. Veuillez réessayer.';
+      setError(msg.includes('FirebaseError') ? `Erreur Firebase : ${msg}` : msg);
     } finally {
       setIsUploading(false);
       setUploadProgress(0);
@@ -295,7 +296,7 @@ export const GuestFormModal: React.FC<GuestFormModalProps> = ({ isOpen, onClose,
                   id="content-input"
                   rows={3}
                   className="form-textarea"
-                  placeholder="Écrivez votre message pour Papa..."
+                  placeholder="Écrivez votre message pour Olivier..."
                   value={content}
                   onChange={(e) => setContent(e.target.value)}
                   disabled={isUploading}
@@ -507,7 +508,7 @@ export const GuestFormModal: React.FC<GuestFormModalProps> = ({ isOpen, onClose,
             </div>
 
             <p className="preview-hint">
-              💡 Ce que vous voyez est exactement ce qui sera épinglé sur le tableau de Papa !
+              💡 Ce que vous voyez est exactement ce qui sera épinglé sur le tableau d'Olivier !
             </p>
           </div>
         </div>

@@ -34,10 +34,10 @@ export const CorkBoard: React.FC<CorkBoardProps> = ({
       <div className="wooden-frame">
         {/* Surface en liège texturée */}
         <div className="cork-surface">
-          {/* Haut du tableau : Dossard officiel de course de Papa & Barre d'outils */}
+          {/* Haut du tableau : Dossard officiel de course d'Olivier & Barre d'outils */}
           <div className="corkboard-top-section">
-            {/* Dossard officiel de vélo de Papa épinglé */}
-            <div className="vintage-race-bib" title="Dossard officiel de course de Papa">
+            {/* Dossard officiel de vélo d'Olivier épinglé */}
+            <div className="vintage-race-bib" title="Dossard officiel de course d'Olivier">
               <div className="bib-pin pin-tl" />
               <div className="bib-pin pin-tr" />
               <div className="bib-header">
@@ -104,7 +104,7 @@ export const CorkBoard: React.FC<CorkBoardProps> = ({
               <div className="empty-postit">
                 <div className="empty-pin" />
                 <p className="empty-title">Le peloton est en route ! 🚴‍♂️</p>
-                <p className="empty-sub">Soyez le premier ou la première à déposer un mot d'encouragement pour Papa.</p>
+                <p className="empty-sub">Soyez le premier ou la première à déposer un mot d'encouragement pour Olivier.</p>
                 <button
                   type="button"
                   className="empty-cta"
