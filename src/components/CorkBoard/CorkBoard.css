@@ -3,7 +3,7 @@
   z-index: 5;
   width: 100%;
   max-width: 1200px;
-  margin: 1rem auto 3rem auto;
+  margin: 2.75rem auto 7rem auto;
   padding: 0 1rem;
 }
 
@@ -36,11 +36,117 @@
   min-height: 520px;
 }
 
+/* Section supérieure : Dossard de course et Filtres */
+.corkboard-top-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+/* Dossard de course vintage officiel de Papa */
+.vintage-race-bib {
+  position: relative;
+  background: #ffffff;
+  border: 3px solid #dc2626;
+  border-radius: 8px;
+  padding: 0.6rem 1.2rem;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.22),
+              inset 0 0 8px rgba(0, 0, 0, 0.04);
+  transform: rotate(-1deg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 380px;
+  width: 100%;
+  transition: transform 0.2s;
+}
+
+.vintage-race-bib:hover {
+  transform: rotate(0deg) scale(1.02);
+}
+
+/* Épingles métalliques aux coins */
+.bib-pin {
+  position: absolute;
+  top: -7px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #f1f5f9, #475569);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.35);
+}
+
+.pin-tl {
+  left: 14px;
+}
+
+.pin-tr {
+  right: 14px;
+}
+
+.bib-header {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #b91c1c;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  border-bottom: 1.5px solid #fee2e2;
+  padding-bottom: 0.25rem;
+  width: 100%;
+  justify-content: center;
+}
+
+.bib-stars {
+  color: #f59e0b;
+  font-size: 0.65rem;
+}
+
+.bib-body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.85rem;
+  padding: 0.2rem 0;
+}
+
+.bib-number {
+  font-family: 'Outfit', sans-serif;
+  font-size: 2rem;
+  font-weight: 900;
+  color: #1e293b;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.bib-bike-icon,
+.bib-trophy-icon {
+  font-size: 1.35rem;
+}
+
+.bib-footer {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #475569;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border-top: 1.5px solid #fee2e2;
+  padding-top: 0.25rem;
+  width: 100%;
+}
+
 /* Barre d'outils et filtres */
 .corkboard-toolbar {
   display: flex;
-  justify-content: flex-end;
-  margin-bottom: 1.75rem;
+  align-items: center;
 }
 
 .filter-group {

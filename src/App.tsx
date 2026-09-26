@@ -124,7 +124,6 @@ export function App() {
           onOpenGuestForm={() => setIsGuestFormOpen(true)}
           onOpenSlideshow={() => setIsSlideshowOpen(true)}
           onOpenAdmin={() => setIsAdminOpen(true)}
-          messageCount={messages.filter((m) => !m.hidden).length}
         />
 
         {/* 3. Le tableau de liège avec les souvenirs épinglés */}

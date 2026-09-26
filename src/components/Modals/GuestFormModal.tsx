@@ -162,6 +162,7 @@ export const GuestFormModal: React.FC<GuestFormModalProps> = ({ isOpen, onClose,
         },
       });
 
+      // Animation festive de confettis
       confetti({
         particleCount: 100,
         spread: 70,

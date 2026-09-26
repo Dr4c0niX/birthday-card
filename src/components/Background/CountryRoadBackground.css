@@ -276,3 +276,172 @@
     opacity: 0;
   }
 }
+
+/* Animation du cycliste au loin sur les collines */
+.cyclist-distant {
+  animation: rideDistantHills 65s linear infinite;
+  transform-origin: center;
+}
+
+@keyframes rideDistantHills {
+  0% {
+    transform: translate(-40px, 475px) scale(0.9);
+    opacity: 0;
+  }
+  5% {
+    opacity: 0.85;
+  }
+  25% {
+    transform: translate(320px, 420px) scale(0.9) rotate(-3deg);
+  }
+  50% {
+    transform: translate(680px, 455px) scale(0.9) rotate(3deg);
+  }
+  75% {
+    transform: translate(1050px, 415px) scale(0.9) rotate(-2deg);
+  }
+  95% {
+    opacity: 0.85;
+  }
+  100% {
+    transform: translate(1480px, 440px) scale(0.9);
+    opacity: 0;
+  }
+}
+
+.vintage-bike {
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.15));
+}
+
+.mountain-pass-milestone {
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.18));
+}
+
+/* Montgolfières poétiques */
+.hot-air-balloon {
+  position: absolute;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.balloon-1 {
+  top: 45px;
+  left: 5%;
+  animation: floatBalloon1 9s ease-in-out infinite alternate;
+}
+
+.balloon-2 {
+  top: 55px;
+  right: 6%;
+  animation: floatBalloon2 12s ease-in-out infinite alternate;
+}
+
+@keyframes floatBalloon1 {
+  0% { transform: translate(0, 0) rotate(1deg); }
+  50% { transform: translate(8px, -18px) rotate(-1.5deg); }
+  100% { transform: translate(0, -6px) rotate(0.5deg); }
+}
+
+@keyframes floatBalloon2 {
+  0% { transform: translate(0, 0) rotate(-1deg); }
+  50% { transform: translate(-6px, -14px) rotate(1deg); }
+  100% { transform: translate(0, -4px) rotate(-0.5deg); }
+}
+
+/* Pales rotatives du moulin à vent */
+.windmill-sails {
+  transform-origin: 0 0;
+  animation: spinWindmillSails 22s linear infinite;
+}
+
+@keyframes spinWindmillSails {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Papillons voltigeurs au-dessus des fleurs */
+.butterfly {
+  position: absolute;
+  pointer-events: none;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  gap: 1px;
+}
+
+.butterfly-1 {
+  bottom: 85px;
+  left: 28%;
+  animation: flyButterfly1 16s ease-in-out infinite;
+}
+
+.butterfly-2 {
+  bottom: 70px;
+  left: 67%;
+  animation: flyButterfly2 20s ease-in-out infinite;
+}
+
+.wing {
+  display: inline-block;
+  width: 9px;
+  height: 11px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.butterfly-1 .wing {
+  background: linear-gradient(135deg, #fbbf24 0%, #ea580c 100%);
+}
+
+.butterfly-2 .wing {
+  background: linear-gradient(135deg, #67e8f9 0%, #2563eb 100%);
+}
+
+.wing-left {
+  border-radius: 60% 40% 30% 60%;
+  transform-origin: right center;
+  animation: flutterWingLeft 0.3s ease-in-out infinite alternate;
+}
+
+.wing-right {
+  border-radius: 40% 60% 60% 30%;
+  transform-origin: left center;
+  animation: flutterWingRight 0.3s ease-in-out infinite alternate;
+}
+
+@keyframes flutterWingLeft {
+  0% { transform: scaleX(1) rotate(0deg); }
+  100% { transform: scaleX(0.2) rotate(20deg); }
+}
+
+@keyframes flutterWingRight {
+  0% { transform: scaleX(1) rotate(0deg); }
+  100% { transform: scaleX(0.2) rotate(-20deg); }
+}
+
+@keyframes flyButterfly1 {
+  0% { transform: translate(0, 0); }
+  25% { transform: translate(25px, -35px) rotate(15deg); }
+  50% { transform: translate(55px, -15px) rotate(-10deg); }
+  75% { transform: translate(30px, -45px) rotate(20deg); }
+  100% { transform: translate(0, 0); }
+}
+
+@keyframes flyButterfly2 {
+  0% { transform: translate(0, 0); }
+  25% { transform: translate(-30px, -25px) rotate(-15deg); }
+  50% { transform: translate(-60px, -40px) rotate(10deg); }
+  75% { transform: translate(-20px, -15px) rotate(-20deg); }
+  100% { transform: translate(0, 0); }
+}
+
+@media (max-width: 768px) {
+  .hot-air-balloon.balloon-2 {
+    display: none;
+  }
+  .balloon-1 {
+    top: 50px;
+    left: 8%;
+    transform: scale(0.85);
+  }
+}
+

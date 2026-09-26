@@ -1,5 +1,5 @@
 import React from 'react';
-import { Calendar, Sparkles, Tv, PlusCircle, Lock, ShieldCheck } from 'lucide-react';
+import { Sparkles, Tv, PlusCircle, Lock, Calendar } from 'lucide-react';
 import type { CountdownTime } from '../../types';
 import './Header.css';
 
@@ -10,7 +10,6 @@ interface HeaderProps {
   onOpenGuestForm: () => void;
   onOpenSlideshow: () => void;
   onOpenAdmin: () => void;
-  messageCount: number;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -20,20 +19,14 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenGuestForm,
   onOpenSlideshow,
   onOpenAdmin,
-  messageCount,
 }) => {
   const isBirthdayDay = countdown.isExpired || isSimulatedDayJ;
 
   return (
     <header className="app-header">
-      {/* Barre supérieure : stats discrètes, switch de test et accès admin */}
+      {/* Barre supérieure : switch de test et accès admin */}
       <div className="header-top-bar">
-        <div className="status-badge">
-          <span className="pulse-dot"></span>
-          <span className="badge-text">{messageCount} souvenirs épinglés</span>
-        </div>
-
-        <div className="header-actions-right">
+        <div className="header-actions-right header-actions-standalone">
           {/* Bouton simulation de date pour tester les deux modes */}
           <button
             type="button"
@@ -72,17 +65,17 @@ export const Header: React.FC<HeaderProps> = ({
       {/* Titre principal et carte d'accueil */}
       <div className="hero-card">
         <div className="hero-title-group">
-          <span className="party-icon">🎈</span>
+          <span className="party-icon">🚴‍♂️</span>
           <h1 className="hero-title">
-            Joyeux Anniversaire Papa !
+            Joyeux 50ème Anniversaire Papa !
           </h1>
           <span className="party-icon">🎂</span>
         </div>
 
         <p className="hero-subtitle">
           {isBirthdayDay
-            ? "C'est le grand jour ! Voici tous les mots chaleureux, anecdotes et photos souvenirs préparés en secret par tes proches."
-            : "Chaque proche muni de ce lien peut déposer un petit mot, une photo ou une vidéo. Les messages sont gardés secrets jusqu'au 4 octobre !"}
+            ? "Joyeux 50 ans Papa ! 🎉 Découvre tous les magnifiques souvenirs et petits mots d'amour préparés en secret par tes proches pour fêter ton demi-siècle !"
+            : "Chaque proche muni de ce lien peut déposer un petit mot, une photo ou une vidéo souvenir pour célébrer les 50 ans de Papa. Tout est gardé secret jusqu'au 4 octobre !"}
         </p>
 
         {/* Section Compte à rebours OU Bandeau Célébration */}
@@ -90,7 +83,7 @@ export const Header: React.FC<HeaderProps> = ({
           <div className="countdown-container">
             <div className="countdown-header">
               <Calendar size={18} className="countdown-icon" />
-              <span>Grande révélation dans :</span>
+              <span>Révélation des 50 ans dans :</span>
             </div>
             <div className="countdown-timer">
               <div className="countdown-unit">
@@ -117,7 +110,7 @@ export const Header: React.FC<HeaderProps> = ({
         ) : (
           <div className="birthday-banner">
             <Sparkles size={22} className="sparkle-anim" />
-            <span className="birthday-banner-text">✨ C'est aujourd'hui ! Tous les vœux sont désormais révélés ! ✨</span>
+            <span className="birthday-banner-text">🎂 Joyeux 50 ans Papa ! Tous les messages et souvenirs sont enfin révélés ! 🎉</span>
             <Sparkles size={22} className="sparkle-anim" />
           </div>
         )}
@@ -131,12 +124,11 @@ export const Header: React.FC<HeaderProps> = ({
               onClick={onOpenGuestForm}
             >
               <PlusCircle size={20} />
-              <span>Épingler un mot ou une photo</span>
+              <span>Ajoutes ton message</span>
             </button>
           ) : (
             <div className="form-closed-badge">
-              <ShieldCheck size={18} />
-              <span>La boîte à souvenirs est maintenant fermée. Profite bien de ta journée Papa !</span>
+              <span>🎂 La boîte à souvenirs est fermée. Très bel anniversaire pour tes 50 ans Papa !</span>
             </div>
           )}
         </div>
