@@ -1,0 +1,220 @@
+.media-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 15, 25, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  z-index: 110;
+  animation: fadeInMedia 0.2s ease-out;
+}
+
+@keyframes fadeInMedia {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.media-modal-box {
+  position: relative;
+  background: #ffffff;
+  border-radius: 20px;
+  overflow: hidden;
+  max-width: 860px;
+  width: 100%;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+  animation: scaleMedia 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes scaleMedia {
+  from { transform: scale(0.92); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.media-close-btn {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(6px);
+  border: none;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 15;
+  transition: all 0.2s;
+}
+
+.media-close-btn:hover {
+  background: rgba(0, 0, 0, 0.85);
+  transform: scale(1.08);
+}
+
+.media-display-area {
+  position: relative;
+  background: #090d16;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 340px;
+  max-height: 60vh;
+  overflow: hidden;
+}
+
+.media-modal-image {
+  max-width: 100%;
+  max-height: 60vh;
+  object-fit: contain;
+  animation: fadeInPhoto 0.25s ease-out;
+}
+
+@keyframes fadeInPhoto {
+  from { opacity: 0.6; transform: scale(0.98); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.media-modal-player {
+  max-width: 100%;
+  max-height: 60vh;
+  outline: none;
+}
+
+/* Flèches de navigation */
+.media-view-nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.2s ease;
+}
+
+.media-view-nav-btn:hover {
+  background: rgba(0, 0, 0, 0.85);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.media-view-nav-btn.prev {
+  left: 14px;
+}
+
+.media-view-nav-btn.next {
+  right: 14px;
+}
+
+/* Galerie miniature (filmstrip) */
+.media-modal-filmstrip {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #0f172a;
+  padding: 0.65rem 1.25rem;
+  overflow-x: auto;
+}
+
+.filmstrip-thumb {
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 2px solid transparent;
+  background: #1e293b;
+  cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
+  opacity: 0.6;
+  transition: all 0.2s;
+}
+
+.filmstrip-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.filmstrip-thumb:hover {
+  opacity: 0.9;
+  transform: scale(1.05);
+}
+
+.filmstrip-thumb.active {
+  opacity: 1;
+  border-color: #22c55e;
+  box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.3);
+}
+
+.filmstrip-video-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #34d399;
+}
+
+.filmstrip-counter {
+  margin-left: auto;
+  color: #94a3b8;
+  font-size: 0.78rem;
+  font-weight: 600;
+  font-family: 'Outfit', sans-serif;
+  white-space: nowrap;
+}
+
+.media-modal-info {
+  padding: 1.25rem 1.5rem;
+  background: #ffffff;
+}
+
+.media-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.media-modal-author {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.media-modal-date {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.85rem;
+  color: #64748b;
+}
+
+.media-modal-caption {
+  font-family: 'Caveat', cursive, sans-serif;
+  font-size: 1.45rem;
+  line-height: 1.35;
+  color: #1e293b;
+  margin: 0;
+}

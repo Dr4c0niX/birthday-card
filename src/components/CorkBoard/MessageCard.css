@@ -1,0 +1,428 @@
+/* Conteneur principal de la carte */
+.cork-card-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  transform: rotate(var(--card-rotation, 0deg));
+  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1),
+              box-shadow 0.3s ease,
+              z-index 0s;
+  cursor: pointer;
+  user-select: none;
+}
+
+.cork-card-wrapper:hover {
+  transform: rotate(0deg) scale(1.03) translateY(-4px);
+  z-index: 15;
+}
+
+/* --- Punaise 3D réaliste --- */
+.pushpin {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 22px;
+  height: 22px;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.pin-head {
+  position: relative;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.35),
+              inset 0 2px 3px rgba(255, 255, 255, 0.6),
+              inset 0 -2px 3px rgba(0, 0, 0, 0.3);
+}
+
+.pin-highlight {
+  position: absolute;
+  top: 3px;
+  left: 4px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.85);
+}
+
+.pin-shadow {
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 14px;
+  height: 5px;
+  background: radial-gradient(ellipse at center, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0) 70%);
+}
+
+.pin-red .pin-head { background: radial-gradient(circle at 35% 35%, #ff4d4d, #b30000); }
+.pin-blue .pin-head { background: radial-gradient(circle at 35% 35%, #4da6ff, #0052cc); }
+.pin-yellow .pin-head { background: radial-gradient(circle at 35% 35%, #ffee55, #cc9900); }
+.pin-green .pin-head { background: radial-gradient(circle at 35% 35%, #55dd77, #118833); }
+.pin-gold .pin-head { background: radial-gradient(circle at 35% 35%, #ffd700, #b8860b); }
+
+/* --- Washi Tape décoratif --- */
+.washi-tape {
+  position: absolute;
+  top: -8px;
+  left: 20px;
+  width: 60px;
+  height: 18px;
+  background-color: rgba(255, 235, 180, 0.7);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  transform: rotate(-3deg);
+  z-index: 4;
+  backdrop-filter: blur(2px);
+  border-left: 2px dashed rgba(200, 160, 100, 0.3);
+  border-right: 2px dashed rgba(200, 160, 100, 0.3);
+}
+
+.tape-stripes {
+  background: repeating-linear-gradient(
+    45deg,
+    rgba(255, 182, 193, 0.65),
+    rgba(255, 182, 193, 0.65) 6px,
+    rgba(255, 240, 245, 0.65) 6px,
+    rgba(255, 240, 245, 0.65) 12px
+  );
+}
+
+.tape-dots {
+  background-color: rgba(176, 224, 230, 0.7);
+  background-image: radial-gradient(rgba(70, 130, 180, 0.4) 15%, transparent 16%);
+  background-size: 8px 8px;
+}
+
+/* --- Carte Post-It --- */
+.postit-card {
+  padding: 1.5rem 1.25rem 1rem 1.25rem;
+  min-height: 180px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 3px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15),
+              0 2px 4px rgba(0, 0, 0, 0.1),
+              inset 0 -25px 25px rgba(0, 0, 0, 0.02);
+  transition: box-shadow 0.2s;
+  position: relative;
+}
+
+/* Couleurs des Post-Its */
+.color-yellow .postit-card { background: linear-gradient(135deg, #fffbc7 0%, #fff48c 100%); }
+.color-pink .postit-card { background: linear-gradient(135deg, #ffe3ec 0%, #ffd0e0 100%); }
+.color-green .postit-card { background: linear-gradient(135deg, #e4fce4 0%, #c9f7c9 100%); }
+.color-blue .postit-card { background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%); }
+.color-purple .postit-card { background: linear-gradient(135deg, #f3e8ff 0%, #e9d5ff 100%); }
+
+.postit-content {
+  flex: 1;
+}
+
+.postit-text {
+  font-family: 'Caveat', cursive, sans-serif;
+  font-size: 1.45rem;
+  line-height: 1.35;
+  color: #1f2937;
+  margin: 0;
+  word-break: break-word;
+}
+
+/* --- Carte Polaroid --- */
+.polaroid-card {
+  background: #ffffff;
+  padding: 0.85rem 0.85rem 1.1rem 0.85rem;
+  border-radius: 4px;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.2),
+              0 2px 6px rgba(0, 0, 0, 0.12);
+  display: flex;
+  flex-direction: column;
+}
+
+.polaroid-media-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: #111827;
+  border-radius: 2px;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.4);
+}
+
+.polaroid-media {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.polaroid-card:hover .polaroid-media {
+  transform: scale(1.03);
+}
+
+.polaroid-video-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.video-play-badge {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+  color: #ffffff;
+  padding: 0.5rem 0.9rem;
+  border-radius: 9999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  pointer-events: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.media-zoom-hint {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(4px);
+  color: #ffffff;
+  padding: 0.25rem 0.6rem;
+  border-radius: 9999px;
+  font-size: 0.72rem;
+  font-weight: 500;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.polaroid-media-container:hover .media-zoom-hint {
+  opacity: 1;
+}
+
+.polaroid-caption {
+  padding-top: 0.85rem;
+}
+
+.polaroid-text {
+  font-family: 'Caveat', cursive, sans-serif;
+  font-size: 1.35rem;
+  line-height: 1.3;
+  color: #27272a;
+  margin: 0 0 0.5rem 0;
+  word-break: break-word;
+}
+
+/* Pied de carte commun */
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.6rem;
+  padding-top: 0.4rem;
+  border-top: 1px dashed rgba(0, 0, 0, 0.12);
+}
+
+.card-author {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  font-size: 0.88rem;
+  color: #374151;
+}
+
+.card-date {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.72rem;
+  color: #6b7280;
+}
+
+.footer-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.like-heart-btn {
+  background: none;
+  border: none;
+  padding: 2px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.15s ease;
+}
+
+.like-heart-btn:hover {
+  transform: scale(1.2);
+}
+
+.like-heart-btn.liked {
+  animation: popHeart 0.3s ease;
+}
+
+@keyframes popHeart {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.35); }
+  100% { transform: scale(1); }
+}
+
+/* --- Voile de flou (Phase 1 Spoil) --- */
+.blur-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  z-index: 10;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.blur-overlay:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.blur-card-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  text-align: center;
+}
+
+.blur-icon {
+  color: #4b5563;
+}
+
+.blur-text {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.85rem;
+  color: #1f2937;
+}
+
+.spoil-button {
+  background: #ffffff;
+  color: #1f2937;
+  border: 1px solid #d1d5db;
+  border-radius: 9999px;
+  padding: 0.35rem 0.85rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+}
+
+.spoil-button:hover {
+  background: #f3f4f6;
+  border-color: #9ca3af;
+  transform: scale(1.04);
+}
+
+.re-blur-btn {
+  position: absolute;
+  bottom: -10px;
+  right: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 9999px;
+  padding: 0.2rem 0.55rem;
+  font-size: 0.68rem;
+  color: #6b7280;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 12;
+  transition: all 0.2s;
+}
+
+.re-blur-btn:hover {
+  color: #111827;
+  border-color: #9ca3af;
+}
+
+/* --- Multi-médias Badge & Flèches --- */
+.multi-media-badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(6px);
+  color: #ffffff;
+  padding: 0.25rem 0.6rem;
+  border-radius: 9999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  z-index: 6;
+}
+
+.media-nav-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  border: none;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s, background 0.2s, transform 0.2s;
+  z-index: 6;
+}
+
+.polaroid-media-container:hover .media-nav-arrow {
+  opacity: 1;
+}
+
+.media-nav-arrow:hover {
+  background: rgba(0, 0, 0, 0.85);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.arrow-left {
+  left: 6px;
+}
+
+.arrow-right {
+  right: 6px;
+}
+
+.blur-media-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  background: rgba(0, 0, 0, 0.08);
+  padding: 0.2rem 0.6rem;
+  border-radius: 9999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #475569;
+}

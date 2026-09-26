@@ -1,0 +1,278 @@
+/* Arrière-plan bucolique avec ciel animé et route de campagne */
+.bucolic-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* Ciel d'été chaleureux */
+.sky-gradient {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60%;
+  background: linear-gradient(180deg, #6ecbf5 0%, #b8e7fa 55%, #faedd9 100%);
+}
+
+/* Soleil radieux avec halo */
+.sun-container {
+  position: absolute;
+  top: 40px;
+  right: 12%;
+  width: 120px;
+  height: 120px;
+}
+
+.sun-glow {
+  position: absolute;
+  top: -20px;
+  left: -20px;
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 236, 179, 0.6) 0%, rgba(255, 236, 179, 0) 70%);
+  animation: pulseSun 6s ease-in-out infinite alternate;
+}
+
+.sun-core {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #fff7b3 0%, #ffd043 100%);
+  box-shadow: 0 0 35px #ffe07a;
+}
+
+@keyframes pulseSun {
+  0% { transform: scale(0.92); opacity: 0.7; }
+  100% { transform: scale(1.15); opacity: 1; }
+}
+
+/* Nuages cotonneux style dessin animé */
+.cloud-layer {
+  position: absolute;
+  top: 20px;
+  left: 0;
+  width: 100%;
+  height: 250px;
+}
+
+.cloud {
+  position: absolute;
+  background: #ffffff;
+  border-radius: 50px;
+  opacity: 0.88;
+  filter: drop-shadow(0 4px 10px rgba(0, 50, 100, 0.08));
+}
+
+.cloud::before,
+.cloud::after {
+  content: '';
+  position: absolute;
+  background: #ffffff;
+  border-radius: 50%;
+}
+
+/* Forme des nuages */
+.cloud-1 {
+  width: 130px;
+  height: 45px;
+  top: 30px;
+  animation: driftCloud 75s linear infinite;
+}
+.cloud-1::before {
+  width: 55px;
+  height: 55px;
+  top: -25px;
+  left: 20px;
+}
+.cloud-1::after {
+  width: 40px;
+  height: 40px;
+  top: -15px;
+  right: 25px;
+}
+
+.cloud-2 {
+  width: 190px;
+  height: 60px;
+  top: 95px;
+  animation: driftCloud 110s linear infinite;
+  animation-delay: -35s;
+  opacity: 0.92;
+}
+.cloud-2::before {
+  width: 80px;
+  height: 80px;
+  top: -40px;
+  left: 30px;
+}
+.cloud-2::after {
+  width: 60px;
+  height: 60px;
+  top: -25px;
+  right: 35px;
+}
+
+.cloud-3 {
+  width: 100px;
+  height: 35px;
+  top: 160px;
+  animation: driftCloud 90s linear infinite;
+  animation-delay: -70s;
+  opacity: 0.75;
+}
+.cloud-3::before {
+  width: 40px;
+  height: 40px;
+  top: -18px;
+  left: 15px;
+}
+.cloud-3::after {
+  width: 30px;
+  height: 30px;
+  top: -10px;
+  right: 18px;
+}
+
+.cloud-4 {
+  width: 160px;
+  height: 50px;
+  top: 60px;
+  animation: driftCloud 130s linear infinite;
+  animation-delay: -10s;
+  opacity: 0.85;
+}
+.cloud-4::before {
+  width: 70px;
+  height: 70px;
+  top: -30px;
+  left: 25px;
+}
+.cloud-4::after {
+  width: 50px;
+  height: 50px;
+  top: -20px;
+  right: 25px;
+}
+
+.cloud-5 {
+  width: 120px;
+  height: 40px;
+  top: 140px;
+  animation: driftCloud 85s linear infinite;
+  animation-delay: -50s;
+  opacity: 0.8;
+}
+.cloud-5::before {
+  width: 50px;
+  height: 50px;
+  top: -22px;
+  left: 20px;
+}
+.cloud-5::after {
+  width: 35px;
+  height: 35px;
+  top: -15px;
+  right: 20px;
+}
+
+@keyframes driftCloud {
+  0% { transform: translateX(-250px); }
+  100% { transform: translateX(calc(100vw + 250px)); }
+}
+
+/* Petits oiseaux stylisés */
+.birds-container {
+  position: absolute;
+  top: 110px;
+  left: 18%;
+  display: flex;
+  gap: 18px;
+  opacity: 0.45;
+  animation: flyBirds 45s ease-in-out infinite;
+}
+
+.bird {
+  display: inline-block;
+  width: 14px;
+  height: 6px;
+  border-top: 2px solid #2d4c1e;
+  border-right: 2px solid transparent;
+  border-left: 2px solid transparent;
+  border-radius: 50% 50% 0 0;
+  transform: rotate(-10deg);
+}
+
+.bird-2 {
+  transform: scale(0.8) rotate(-5deg) translateY(-8px);
+}
+.bird-3 {
+  transform: scale(0.6) rotate(-12deg) translateY(6px);
+}
+
+@keyframes flyBirds {
+  0% { transform: translate(0, 0); }
+  50% { transform: translate(120px, -20px); }
+  100% { transform: translate(0, 0); }
+}
+
+/* SVG Paysage collines & route */
+.landscape-svg {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 75%;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+/* Particules dans la brise d'été */
+.breeze-particles {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.particle {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 230, 150, 0.65);
+  box-shadow: 0 0 6px rgba(255, 255, 255, 0.8);
+  animation: floatBreeze 16s ease-in-out infinite;
+}
+
+.p-1 { top: 50%; left: 10%; animation-duration: 14s; animation-delay: 0s; width: 6px; height: 6px; }
+.p-2 { top: 70%; left: 30%; animation-duration: 18s; animation-delay: 3s; background: rgba(255, 180, 200, 0.5); }
+.p-3 { top: 40%; left: 60%; animation-duration: 13s; animation-delay: 6s; }
+.p-4 { top: 75%; left: 80%; animation-duration: 20s; animation-delay: 1s; width: 10px; height: 10px; }
+.p-5 { top: 60%; left: 45%; animation-duration: 15s; animation-delay: 8s; background: rgba(255, 255, 255, 0.7); }
+
+@keyframes floatBreeze {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.8;
+  }
+  80% {
+    opacity: 0.7;
+  }
+  100% {
+    transform: translate(180px, -90px) rotate(360deg);
+    opacity: 0;
+  }
+}
