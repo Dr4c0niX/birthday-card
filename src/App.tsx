@@ -11,8 +11,8 @@ import { subscribeToMessages } from './services/firebase';
 import type { BirthdayMessage, CountdownTime } from './types';
 import './App.css';
 
-// Date cible : 4 octobre à 00:00:00
-const DEFAULT_TARGET_DATE = import.meta.env.VITE_TARGET_DATE || '2026-10-04T00:00:00';
+// Date cible : 4 octobre à 12:00:00 (midi)
+const DEFAULT_TARGET_DATE = import.meta.env.VITE_TARGET_DATE || '2026-10-04T12:00:00';
 
 export function App() {
   const [messages, setMessages] = useState<BirthdayMessage[]>([]);

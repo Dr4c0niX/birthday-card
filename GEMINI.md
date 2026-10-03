@@ -12,8 +12,8 @@ L'esthétique combine un **tableau de liège chaleureux** (avec des post-its col
 
 | Phase | Période | Comportement Front-end | Comportement Back-end |
 | :--- | :--- | :--- | :--- |
-| **Phase 1 : Collecte** | Jusqu'au 4 octobre à minuit | - Compte à rebours dynamique jusqu'au 4 octobre.<br>- Formulaire d'ajout actif.<br>- Messages sur le liège **floutés par défaut** avec bouton "Révéler / Spoil" individuel pour préserver la surprise. | Écritures autorisées (Firestore + Storage). |
-| **Phase 2 : Le Jour J** | À partir du 4 octobre | - Formulaire désactivé, remplacé par un bandeau festif.<br>- Révélation automatique de tous les messages (aucun flou).<br>- Animation festive (pluie de confettis, ambiance anniversaire). | Écritures verrouillées par règles de sécurité Firebase (`request.time < ...`). |
+| **Phase 1 : Collecte** | Jusqu'au 4 octobre à midi (12h) | - Compte à rebours dynamique jusqu'au 4 octobre à 12h.<br>- Formulaire d'ajout actif.<br>- Messages sur le liège **floutés par défaut** avec bouton "Révéler / Spoil" individuel pour préserver la surprise. | Écritures autorisées (Firestore + Storage). |
+| **Phase 2 : Le Jour J** | À partir du 4 octobre à midi | - Formulaire désactivé, remplacé par un bandeau festif.<br>- Révélation automatique de tous les messages (aucun flou).<br>- Animation festive (pluie de confettis, ambiance anniversaire). | Écritures verrouillées par règles de sécurité Firebase (`request.time < ...`). |
 
 ---
 

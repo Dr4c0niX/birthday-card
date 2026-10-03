@@ -80,7 +80,7 @@ export const Header: React.FC<HeaderProps> = ({
         <p className="hero-subtitle">
           {isBirthdayDay
             ? "Joyeux 50 ans Olivier ! 🎉 Découvre tous les magnifiques souvenirs et petits mots d'amour préparés en secret par tes proches pour fêter ton demi-siècle !"
-            : "Chaque proche muni de ce lien peut déposer un petit mot, une photo ou une vidéo souvenir pour célébrer les 50 ans d'Olivier. Tout est gardé secret jusqu'au 4 octobre !"}
+            : "Chaque proche muni de ce lien peut déposer un petit mot, une photo ou une vidéo souvenir pour célébrer les 50 ans d'Olivier. Tout est gardé secret jusqu'au 4 octobre à midi !"}
         </p>
 
         {/* Section Compte à rebours OU Bandeau Célébration */}
